@@ -1,0 +1,16 @@
+setup-postgresql-ubuntu:
+  if: true # false to skip job during debug
+  name: Setup PostgreSQL on Ubuntu
+  runs-on: ubuntu-latest
+  steps:
+  - name: Start PostgreSQL on Ubuntu
+    run: |
+      sudo systemctl start postgresql.service
+      pg_isready
+  - name: Create scheduler user
+    run: |
+      sudo -u postgres psql --command="CREATE USER scheduler PASSWORD 'somestrong'" --command="\du"
+  - name: Create timetable database
+    run: |
+      sudo -u postgres createdb --owner=scheduler timetable
+      PGPASSWORD=somestrong psql --username=scheduler --host=localhost --list timetable
