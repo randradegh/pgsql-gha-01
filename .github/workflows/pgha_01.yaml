@@ -1,6 +1,7 @@
-setup-postgresql-ubuntu:
-  if: true # false to skip job during debug
-  name: Setup PostgreSQL on Ubuntu
+name: Setup PostgreSQL on Ubuntu
+on: push
+
+runner-job:
   runs-on: ubuntu-latest
   steps:
   - name: Start PostgreSQL on Ubuntu
